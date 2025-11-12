@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Struktur Kelas 10 C - MAN Kota Tegal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body x-data="{selected:null, showTop:false}" 
+      @scroll.window="showTop = window.scrollY > 200"
+      class="bg-gradient-to-br from-green-100 to-emerald-200 min-h-screen flex flex-col items-center p-6 relative">
+
+  <!-- Header dengan Logo -->
+  <header class="w-full max-w-5xl flex items-center mb-10">
+    <img src="logo-man.png" alt="Logo MAN Kota Tegal" class="w-16 h-16 mr-4 rounded-lg shadow-md bg-white p-1 border border-emerald-400">
+    <div>
+      <h1 class="text-4xl font-bold text-emerald-700 leading-tight">Struktur Kelas 10 C</h1>
+      <h2 class="text-lg text-gray-700">Madrasah Aliyah Negeri Kota Tegal</h2>
+    </div>
+  </header>
+
+  <!-- Konten Utama -->
+  <main class="max-w-5xl w-full text-center"
+        x-data="{siswa:[
+      {
+        nama:'Muhammad royan arbiyan',
+        jabatan:'Ketua Kelas',
+        foto:'royan.jpg',
+        nis:'102301',
+        alamat:'Jl. Merpati No. 10, Tegal',
+        citacita:'Dokter',
+        motto:'Disiplin adalah kunci kesuksesan.',
+        detail:'Pemimpin yang bertanggung jawab dan disiplin.'
+      },
+      {
+        nama:'Vikri musyaffa',
+        jabatan:'Wakil Ketua',
+        foto:'vikri.jpg',
+        nis:'102302',
+        alamat:'Jl. Anggrek No. 4, Tegal',
+        citacita:'Guru',
+        motto:'Belajar adalah ibadah.',
+        detail:'Membantu ketua kelas dalam kegiatan harian.'
+      },
+      {
+        nama:'Qaid ibad efendi',
+        jabatan:'Sekretaris',
+        foto:'ibad.jpg',
+        nis:'102303',
+        alamat:'Jl. Mawar No. 7, Tegal',
+        citacita:'Programmer',
+        motto:'Berpikir positif setiap hari.',
+        detail:'Mencatat kegiatan dan kehadiran siswa.'
+      },
+      {
+        nama:'Nadia yoga',
+        jabatan:'Bendahara',
+        foto:'nadia.jpg',
+        nis:'102304',
+        alamat:'Jl. Melati No. 2, Tegal',
+        citacita:'Akuntan',
+        motto:'Kejujuran membawa keberkahan.',
+        detail:'Mengelola keuangan kelas.'
+      },
+      {
+        nama:'pak muhammad dzikrullah, S.Pd',
+        jabatan:'Wali Kelas',
+        foto:'pak-dzik.jpg',
+        nis:'-',
+        alamat:'Guru MAN Kota Tegal',
+        citacita:'Pendidik yang menginspirasi',
+        motto:'Menjadi guru berarti belajar sepanjang hayat.',
+        detail:'Guru wali kelas 10 C MAN Kota Tegal.'
+      }
+    ]}">
+    
+    <!-- Grid Kartu -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <template x-for="(s,index) in siswa" :key="index">
+        <div @click="$root.selected=s"
+             class="cursor-pointer bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-200">
+          <img :src="s.foto" alt="Foto Siswa" class="w-24 h-24 object-cover rounded-full mx-auto mb-4 border-4 border-emerald-400">
+          <h3 class="text-xl font-semibold text-emerald-700" x-text="s.nama"></h3>
+          <p class="text-gray-600" x-text="s.jabatan"></p>
+        </div>
+      </template>
+    </div>
+  </main>
+
+  <!-- Popup Detail -->
+  <div x-show="selected"
+       x-transition
+       class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div class="bg-white rounded-2xl p-6 max-w-md shadow-xl relative text-left">
+      <div class="text-center">
+        <img :src="selected?.foto" alt="Foto Detail" class="w-32 h-32 object-cover rounded-full mx-auto mb-4 border-4 border-emerald-400">
+        <h3 class="text-2xl font-bold text-emerald-700 mb-1" x-text="selected?.nama"></h3>
+        <p class="text-gray-600 font-medium mb-4" x-text="selected?.jabatan"></p>
+      </div>
+      <div class="space-y-1 text-gray-700">
+        <p><strong>NIS:</strong> <span x-text="selected?.nis"></span></p>
+        <p><strong>Alamat:</strong> <span x-text="selected?.alamat"></span></p>
+        <p><strong>Cita-cita:</strong> <span x-text="selected?.citacita"></span></p>
+        <p><strong>Motto:</strong> <span x-text="selected?.motto"></span></p>
+        <p class="pt-2"><strong>Deskripsi:</strong> <span x-text="selected?.detail"></span></p>
+      </div>
+      <div class="text-center mt-6">
+        <button @click="selected=null" class="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tombol Scroll ke Atas -->
+  <button x-show="showTop"
+          @click="window.scrollTo({top:0, behavior:'smooth'})"
+          x-transition
+          class="fixed bottom-6 right-6 bg-emerald-600 text-white p-3 rounded-full shadow-lg hover:bg-emerald-700 focus:outline-none">
+    ⬆️
+  </button>
+
+  <footer class="mt-12 text-gray-600 text-sm">
+    © 2025 Kelas 10 C – Madrasah Aliyah Negeri Kota Tegal
+  </footer>
+
+</body>
+</html>
